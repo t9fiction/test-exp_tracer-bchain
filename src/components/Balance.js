@@ -9,12 +9,23 @@ export const Balance = async() => {
             const accounts = await web3.eth.getAccounts();
             const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
             // console.log("Contract", contract.methods);
-            const showBalance = await contract.methods.currentBalance().send({from: accounts[0]});
-            // console.log("Show Balance",currentBalance)
+            const showBalance = await (contract.methods.currentBalance().send({from: accounts[0]})((err,result)=>{
+                if(!err){
+                    console.log(result)
+                }else{
+                    console.log(err)
+                }
+            }));
+            console.log("Show Balance",showBalance)
 
         }
         
     } catch (error) {
         console.log(error,"error")
     }
+    return(
+        <div>
+            Balance : {}
+        </div>
+    )
 }
